@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in LICENSE$ -->
+
+<!-- See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>    
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;    
+        PREFIX vivo: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX rdf:  &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+        PREFIX afn:  &lt;http://jena.apache.org/ARQ/function#&gt;
+        
+        SELECT ?concept ?conceptLabel ?conceptName ?vocabularySource ?vocabularySourceName
+        WHERE {
+         	?subject ?property ?concept .
+         	LET (?conceptName := afn:localname(?concept)) 
+         	OPTIONAL {
+                <precise-subquery>?subject ?property ?concept .</precise-subquery>
+                ?concept rdfs:label ?conceptLabel .
+            }
+         	OPTIONAL {
+                <precise-subquery>?subject ?property ?concept .</precise-subquery>
+                ?concept rdfs:isDefinedBy ?vocabularySource .
+                OPTIONAL {
+                    <precise-subquery>?subject ?property ?concept .
+                    ?concept rdfs:isDefinedBy ?vocabularySource .</precise-subquery>
+                    ?vocabularySource rdfs:label ?vocabularySourceName .
+                }
+            }
+        } ORDER BY ?conceptLabel ?conceptName 
+    </query-select>
+
+    <template>propStatement-hasAssociatedConcept.ftl</template>
+</list-view-config>

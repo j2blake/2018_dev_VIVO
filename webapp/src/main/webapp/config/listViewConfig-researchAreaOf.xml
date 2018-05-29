@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in LICENSE$ -->
+
+<!-- VIVO-specific default list view config file for object properties 
+    
+     See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>    
+        PREFIX core: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; 
+        PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt; 
+        PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+        PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;
+        PREFIX vcard: &lt;http://www.w3.org/2006/vcard/ns#&gt;
+        PREFIX fn:   &lt;http://www.w3.org/2005/xpath-functions#&gt;  
+
+        SELECT DISTINCT
+                       ?person 
+                       ?personName
+                       ?posnLabel
+                       ?org
+                       ?orgLabel
+                       ?title 
+                       ?dateTimeEnd
+        WHERE { 
+             ?subject ?property ?person .
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?person core:relatedBy ?position .
+                ?position a core:Position .
+             }
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?person core:relatedBy ?position .
+                ?position a core:Position .
+                ?position rdfs:label ?posnLabel .
+             }
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?person rdfs:label ?personName .
+             }
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?person obo:ARG_2000028 ?vcard .
+                ?vcard vcard:hasTitle ?titleObj .
+                ?titleObj vcard:title ?title .
+             }
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?person core:relatedBy ?position .
+                ?position a core:Position .
+                ?position core:relates ?org .
+                ?org a foaf:Organization .
+                ?org rdfs:label ?orgLabel .
+             }
+             OPTIONAL {
+                <precise-subquery>?subject ?property ?person .</precise-subquery>
+                ?position core:dateTimeInterval ?dateTimeInterval .
+                ?dateTimeInterval core:end ?dateTimeEndValue .
+                ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+                FILTER ( ?dateTimeEnd &lt; now() )
+             }
+        } 
+        ORDER BY (fn:lower-case(?personName)) (bound(?dateTimeEnd)) desc(?dateTimeEnd)
+    </query-select>
+
+    <template>propStatement-researchAreaOf.ftl</template>
+</list-view-config>

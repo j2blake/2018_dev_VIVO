@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in LICENSE$ -->
+
+<!-- See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>    
+        PREFIX vcard: &lt;http://www.w3.org/2006/vcard/ns#&gt;
+        
+        SELECT DISTINCT ?vcard ?address
+                        ?street
+                        ?locality 
+                        ?region
+                        ?postalCode
+                        ?country   
+                        
+        WHERE {
+            ?subject ?property ?vcard .
+            ?vcard vcard:hasAddress ?address .
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasAddress ?address .</precise-subquery>
+                ?address vcard:streetAddress ?street  .
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasAddress ?address .</precise-subquery>
+                ?address vcard:locality ?locality .
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasAddress ?address .</precise-subquery>
+                ?address vcard:region ?region .
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasAddress ?address .</precise-subquery>
+                ?address vcard:postalCode ?postalCode .
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasAddress ?address .</precise-subquery>
+                ?address vcard:country ?country .
+            }
+            
+        } ORDER BY ?country ?region ?street
+    </query-select>
+
+    <template>propStatement-mailingAddress.ftl</template>
+    <postprocessor>edu.cornell.mannlib.vitro.webapp.web.templatemodels.individual.MaintainDuplicatesObjectPropertyDataPostProcessor</postprocessor>
+</list-view-config>

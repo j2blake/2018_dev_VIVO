@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in LICENSE$ -->
+
+<!-- See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>
+        PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+        PREFIX core: &lt;http://vivoweb.org/ontology/core#&gt;
+        PREFIX afn:  &lt;http://jena.apache.org/ARQ/function#&gt;
+
+        SELECT DISTINCT ?dateTimeInterval ?label
+            ?valueStart ?valueStartName
+            ?dateTimeStart
+            ?precisionStart
+            ?valueEnd ?valueEndName
+            ?dateTimeEnd
+            ?precisionEnd
+
+        WHERE
+        {
+            ?subject ?property ?dateTimeInterval .
+
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?dateTimeInterval .</precise-subquery>
+                ?dateTimeInterval core:start ?valueStart .
+                LET (?valueStartName := afn:localname(?valueStart))
+
+                OPTIONAL {
+                    <precise-subquery>?subject ?property ?dateTimeInterval .
+                    ?dateTimeInterval core:start ?valueStart .</precise-subquery>
+                    ?valueStart core:dateTime ?dateTimeStart .
+                }
+                OPTIONAL {
+                    <precise-subquery>?subject ?property ?dateTimeInterval .
+                    ?dateTimeInterval core:start ?valueStart .</precise-subquery>
+                    ?valueStart core:dateTimePrecision ?dateTimePrecisionStart .
+                    LET (?precisionStart := afn:localname(?dateTimePrecisionStart))
+                }
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?dateTimeInterval .</precise-subquery>
+                ?dateTimeInterval core:end ?valueEnd .
+                LET (?valueEndName := afn:localname(?valueEnd))
+                OPTIONAL {
+                    <precise-subquery>?subject ?property ?dateTimeInterval .
+                    ?dateTimeInterval core:end ?valueEnd .</precise-subquery>
+                    ?valueEnd core:dateTime ?dateTimeEnd .
+                }
+                OPTIONAL {
+                    <precise-subquery>?subject ?property ?dateTimeInterval .
+                    ?dateTimeInterval core:end ?valueEnd .</precise-subquery>
+                    ?valueEnd core:dateTimePrecision ?dateTimePrecisionEnd .
+                    LET (?precisionEnd := afn:localname(?dateTimePrecisionEnd))
+                }
+            }
+            OPTIONAL {
+                <precise-subquery>?subject ?property ?dateTimeInterval .</precise-subquery>
+                ?dateTimeInterval rdfs:label ?label .
+            }
+
+            <critical-data-required>
+                FILTER ( bound(?dateTimeStart) || bound(?dateTimeEnd) )
+            </critical-data-required>
+        }
+    </query-select>
+
+    <template>propStatement-dateTimeInterval.ftl</template>
+</list-view-config>

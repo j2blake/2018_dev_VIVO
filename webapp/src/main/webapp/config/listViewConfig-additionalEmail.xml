@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $This file is distributed under the terms of the license in LICENSE$ -->
+
+<!-- See guidelines at https://wiki.duraspace.org/x/eYXVAw -->
+
+<list-view-config>
+    <query-select>    
+        PREFIX vcard: &lt;http://www.w3.org/2006/vcard/ns#&gt;
+        
+        SELECT DISTINCT ?vcard 
+                        ?email
+                        ?emailAddress
+        WHERE {
+            ?subject ?property ?vcard .
+            ?vcard vcard:hasEmail ?email .
+            ?email vcard:email ?emailAddress .
+            MINUS {
+                <precise-subquery>?subject ?property ?vcard .
+                ?vcard vcard:hasEmail ?email .</precise-subquery>
+                ?email a vcard:Work .
+            }
+        } 
+    </query-select>
+
+    <template>propStatement-emailAddress.ftl</template>
+    <postprocessor>edu.cornell.mannlib.vitro.webapp.web.templatemodels.individual.MaintainDuplicatesObjectPropertyDataPostProcessor</postprocessor>
+</list-view-config>
