@@ -99,6 +99,18 @@
             <#include "individual-positions.ftl">
         </header>
          
+        <!-- Trying out data getter here -->
+        <#if color??>
+        	<h2>Cover colors of authored publications</h2>
+        	<div>
+        	<ul>
+        	<#list color as individualColors>
+        		<li>${individualColor.color!""}</li>
+        	</#list>
+        	</ul>
+        	</div>
+        </#if> 
+         
         <!-- Overview -->
         <#include "individual-overview.ftl">
         

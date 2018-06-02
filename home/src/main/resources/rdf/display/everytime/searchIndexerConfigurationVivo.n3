@@ -151,3 +151,22 @@
 		}
         """ .
 
+##Custom Search indexing for cover color
+:vivodocumentModifier_CoverColor
+    a   searchIndex:documentBuilding.SelectQueryDocumentModifier ,
+        searchIndex:documentBuilding.DocumentModifier ;
+    rdfs:label "Cover Color" ;
+    :hasTargetField "ALLTEXT" ;
+    :hasTargetField "ALLTEXTUNSTEMMED" ;
+    :hasTargetField "covercolor_string" ;
+    :hasSelectQuery """
+        	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    		PREFIX vivo: <http://vivoweb.org/ontology/core#>
+    		PREFIX bibo: <http://purl.org/ontology/bibo/>
+		SELECT ?color 
+		WHERE {
+			?uri vivo:hasCoverColor ?color .
+			?uri rdf:type bibo:Article .
+		}
+        """ .

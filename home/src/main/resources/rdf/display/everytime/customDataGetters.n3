@@ -1,0 +1,35 @@
+# $This file is distributed under the terms of the license in LICENSE$ 
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix core: <http://vivoweb.org/ontology/core#> .
+@prefix vivoweb: <http://vivoweb.org/ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+
+# cover colors datagetter 
+
+foaf:Person display:hasDataGetter display:coverColorDataGetter .
+
+display:coverColorDataGetter
+    a <java:edu.cornell.mannlib.vitro.webapp.utils.dataGetter.CoverColorDataGetter> ;
+    display:saveToVar "color" ;
+    display:query """
+   	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX vivo: <http://vivoweb.org/ontology/core#>
+    PREFIX bibo: <http://purl.org/ontology/bibo/>
+    SELECT DISTINCT ?color 
+    WHERE
+    {
+    	<http://vivo.workshop.edu/individual/n4520> vivo:relatedBy ?authorship .
+    	?authorship rdf:type vivo:Authorship .
+    	?authorship vivo:relates ?article .
+    	?article rdf:type bibo:Article .
+        ?article vivo:hasCoverColor ?color .
+    }
+    
+    """ .
+

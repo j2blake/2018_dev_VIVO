@@ -1,0 +1,57 @@
+<http://vivo.workshop.edu/individual/n5181>
+        a       <http://purl.org/ontology/bibo/Article> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Rainbows are wonderful" ;
+        <http://purl.org/ontology/bibo/abstract>
+                "Rainbows really are wonderful." ;
+        <http://vivoweb.org/ontology/core#relatedBy>
+                <http://vivo.workshop.edu/individual/n585> .
+                
+<http://vivo.workshop.edu/individual/n585>
+        a       <http://vivoweb.org/ontology/core#Authorship> ;
+        <http://vivoweb.org/ontology/core#rank>
+                "1"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://vivoweb.org/ontology/core#relates>
+                <http://vivo.workshop.edu/individual/n5181> , <http://vivo.workshop.edu/individual/n4520> .
+
+<http://vivo.workshop.edu/individual/n4520>
+        a       <http://xmlns.com/foaf/0.1/Person> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Sultan, Razia" ;
+        <http://purl.obolibrary.org/obo/ARG_2000028>
+                <http://vivo.workshop.edu/individual/n5807> ;
+        <http://vivoweb.org/ontology/core#relatedBy>
+                <http://vivo.workshop.edu/individual/n585> .
+
+<http://vivo.workshop.edu/individual/n5807>
+        a       <http://www.w3.org/2006/vcard/ns#Individual> ;
+        <http://purl.obolibrary.org/obo/ARG_2000029>
+                <http://vivo.workshop.edu/individual/n4520> ;
+        <http://www.w3.org/2006/vcard/ns#hasName>
+                <http://vivo.workshop.edu/individual/n2031> .
+
+<http://vivo.workshop.edu/individual/n2031>
+        a       <http://www.w3.org/2006/vcard/ns#Name> ;
+        <http://www.w3.org/2006/vcard/ns#familyName>
+                "Sultan" ;
+        <http://www.w3.org/2006/vcard/ns#givenName>
+                "Razia" .
+                
+<http://vivo.workshop.edu/individual/n7972>
+        a       <http://purl.org/ontology/bibo/Article> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "Unicorns are wonderful" ;
+        <http://purl.org/ontology/bibo/abstract>
+                "Unicorns are truly wonderful" ;
+        <http://vivoweb.org/ontology/core#relatedBy>
+                <http://vivo.workshop.edu/individual/n1273> .
+
+<http://vivo.workshop.edu/individual/n1273>
+        a       <http://vivoweb.org/ontology/core#Authorship> ;
+        <http://vivoweb.org/ontology/core#rank>
+                "1"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://vivoweb.org/ontology/core#relates>
+                <http://vivo.workshop.edu/individual/n4520> , <http://vivo.workshop.edu/individual/n7972> .
+
+<http://vivo.workshop.edu/individual/n5181> <http://vivoweb.org/ontology/core#hasCoverColor>  "blue" .  
+<http://vivo.workshop.edu/individual/n7972> <http://vivoweb.org/ontology/core#hasCoverColor>  "green" .                              

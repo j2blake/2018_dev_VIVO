@@ -1,0 +1,26 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vitro:   <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+
+vivo:hasCoverColor rdf:type owl:DatatypeProperty ;
+rdfs:label "Has Cover Color" ;
+rdfs:domain <http://purl.org/ontology/bibo/Article> ;
+terms:description "Describes color of the cover of a given publication."^^xsd:string ;
+vitro:displayLimitAnnot
+      "1"^^xsd:int ;
+vitro:displayRankAnnot
+      "12"^^xsd:int ;
+vitro:hiddenFromDisplayBelowRoleLevelAnnot
+      <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+vitro:hiddenFromPublishBelowRoleLevelAnnot
+      <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+vitro:inPropertyGroupAnnot
+      <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+      <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+vitro:publicDescriptionAnnot
+      "Describes color of the cover of a given publication."^^xsd:string .
