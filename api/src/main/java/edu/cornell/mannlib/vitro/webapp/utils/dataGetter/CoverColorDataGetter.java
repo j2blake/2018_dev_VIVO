@@ -271,7 +271,13 @@ public class CoverColorDataGetter extends DataGetterBase implements DataGetter{
 		Map<String, Object> rmap = new HashMap<String,Object>();
         
         //put results in page data
-        rmap.put(this.saveToVar, results);  
+		if(results.size() > 0) {
+			//Only return the first result
+			rmap.put(this.saveToVar, results.get(0));
+		} else {
+			rmap.put(this.saveToVar, results);
+
+		}
         //also store the variable name within which results will be returned
         rmap.put("variableName", this.saveToVar);
         //This will be overridden at page level in display model if template specified there
