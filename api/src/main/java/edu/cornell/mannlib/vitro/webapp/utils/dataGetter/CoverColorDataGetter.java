@@ -273,7 +273,9 @@ public class CoverColorDataGetter extends DataGetterBase implements DataGetter{
         //put results in page data
 		if(results.size() > 0) {
 			//Only return the first result
-			rmap.put(this.saveToVar, results.get(0));
+			List<Map<String, String>> returnResults = new ArrayList<Map<String, String>>();
+			returnResults.add(results.get(0));
+			rmap.put(this.saveToVar, returnResults);
 		} else {
 			rmap.put(this.saveToVar, results);
 
