@@ -104,7 +104,7 @@
         	<h2>Cover colors of authored publications</h2>
         	<div>
         	<ul>
-        	<#list color as individualColors>
+        	<#list color as individualColor>
         		<li>${individualColor.color!""}</li>
         	</#list>
         	</ul>

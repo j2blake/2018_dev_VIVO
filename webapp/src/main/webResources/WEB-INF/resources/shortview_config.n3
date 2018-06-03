@@ -1,0 +1,50 @@
+# $This file is distributed under the terms of the license in LICENSE$ 
+
+#
+# Short View configuration
+#
+# This file allows a Vitro administrator to configure short view templates and data getters
+# for individuals of particular classes in particular contexts. This is a transitional
+# implementation, and should be replaced when the work on the Application and Display
+# Ontology is complete.
+#
+# Find out how to use this file at 
+# https://wiki.duraspace.org/display/VIVO/Using+Short+Views+in+Release+1.5
+#
+
+
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix core: <http://vivoweb.org/ontology/core#> .
+@prefix vivoweb: <http://vivoweb.org/ontology#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> 
+# search view data getter to show on publication page search results
+
+bibo:Article display:hasCustomView display:articleCustomView .
+
+display:articleCustomView  a display:customViewForIndividual ;
+    display:appliesToContext   "SEARCH" ;
+    display:hasTemplate        "view-search-publication.ftl" ;
+    display:hasDataGetter      display:articleColorDataGetter .
+
+
+display:articleColorDataGetter
+    a <java:edu.cornell.mannlib.vitro.webapp.utils.dataGetter.SparqlQueryDataGetter> ;
+    display:saveToVar "color" ;
+    display:query """
+   	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX vivo: <http://vivoweb.org/ontology/core#>
+    PREFIX bibo: <http://purl.org/ontology/bibo/>
+    SELECT DISTINCT ?color 
+    WHERE
+    {
+    	?individualUri  rdf:type bibo:Article .
+        ?individualUri vivo:hasCoverColor ?color .
+    }
+    
+    """ .

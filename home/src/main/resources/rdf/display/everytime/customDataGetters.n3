@@ -9,7 +9,7 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 
-# cover colors datagetter 
+# cover colors datagetter for displaying on person page
 
 foaf:Person display:hasDataGetter display:coverColorDataGetter .
 
@@ -24,7 +24,7 @@ display:coverColorDataGetter
     SELECT DISTINCT ?color 
     WHERE
     {
-    	<http://vivo.workshop.edu/individual/n4520> vivo:relatedBy ?authorship .
+    	?individualURI vivo:relatedBy ?authorship .
     	?authorship rdf:type vivo:Authorship .
     	?authorship vivo:relates ?article .
     	?article rdf:type bibo:Article .
@@ -32,4 +32,5 @@ display:coverColorDataGetter
     }
     
     """ .
+
 
